@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">BTL_QLTV</string>
+
+    <string name="nav_tt">Thông tin cá nhân</string>
+    <string name="nav_ds">Đầu sách</string>
+    <string name="nav_tg">Tác giả</string>
+    <string name="nav_nxb">Nhà xuất bản</string>
+    <string name="nav_ls">Loại sách</string>
+    <string name="nav_vt">Vị trí</string>
+
+    <string name="nav_tao_tk">Tạo tài khoản</string>
+
+
+    <string name="nav_taikhoan">Tài khoản</string>
+    <string name="nav_doimk">Đổi mật khẩu</string>
+    <string name="nav_dx">Đăng xuất</string>
+
+
+    <string name="nav_drawer_open">Open navigation drawer</string>
+    <string name="nav_drawer_close">Close navigation drawer</string>
+
+</resources>

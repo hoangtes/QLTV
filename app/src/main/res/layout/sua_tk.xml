@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/tim">
+
+        <!-- LinearLayout để bố trí các thành phần trong Toolbar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Nút Quay lại -->
+            <ImageButton
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginRight="35dp"
+                android:layout_gravity="start"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Quay lại"
+                android:src="@android:drawable/ic_menu_revert" />
+
+            <!-- Tiêu đề nằm giữa -->
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Sửa tài khoản"
+                android:textColor="@android:color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_marginRight="30dp"/>
+
+            <ImageButton
+                android:id="@+id/img_sua"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:background="@drawable/ic_save"
+                android:contentDescription="Thêm"
+                android:backgroundTint="@color/white"/>
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/ic_person"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_marginTop="20dp">
+
+
+            <EditText
+                android:id="@+id/txt_hoten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập tên người dùng..."
+                android:paddingTop="5dp"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"/>
+
+
+            <EditText
+                android:id="@+id/txt_taikhoan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập tài khoản..."
+                android:paddingTop="5dp"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Chức vụ:"
+                    android:layout_marginRight="20dp"/>
+
+                <Spinner
+                    android:id="@+id/spn_chucvu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

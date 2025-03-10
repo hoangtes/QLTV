@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="58dp"
+        android:paddingTop="68dp"
+        android:background="@color/tim">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/anh_thuvien"
+            android:backgroundTint="@color/white"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/txt_tk"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:hint="Nhập tài khoản..."
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:background="@drawable/edittext_border"
+        android:layout_marginTop="40dp"/>
+
+    <EditText
+        android:id="@+id/txt_mk"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:hint="Nhập mật khẩu..."
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:background="@drawable/edittext_border"
+        android:password="true"/>
+
+    <TextView
+        android:id="@+id/txt_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#FF0000"
+        android:textSize="14sp"
+        android:text="Thông tin tài khoản hoặc mật khẩu không chính xác!"
+        android:layout_marginTop="10dp"
+        android:textStyle="italic"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btn_dangnhap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:text="Đăng nhâp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Liên hệ với thủ thư để đăng ký tài khoản!"
+        android:layout_gravity="center"
+        android:textStyle="italic"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>

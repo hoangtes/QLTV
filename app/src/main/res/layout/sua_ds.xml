@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/tim">
+
+        <!-- LinearLayout để bố trí các thành phần trong Toolbar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Nút Quay lại -->
+            <ImageButton
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginRight="35dp"
+                android:layout_gravity="start"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Quay lại"
+                android:src="@android:drawable/ic_menu_revert" />
+
+            <!-- Tiêu đề nằm giữa -->
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Sửa đầu sách"
+                android:textColor="@android:color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_marginRight="30dp"/>
+
+            <ImageButton
+                android:id="@+id/img_sua"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:background="@drawable/ic_save"
+                android:contentDescription="Thêm"
+                android:backgroundTint="@color/white"/>
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:id="@+id/img_book"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/ic_book"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="Tên đầu sách:"/>
+
+                    <EditText
+                        android:id="@+id/txt_tensach"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nhập tên sách..."
+                        android:paddingTop="5dp"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="Tác giả:"
+                        android:paddingTop="5dp"/>
+
+                    <Spinner
+                        android:id="@+id/spn_tacgia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="Nhà xuất bản:"
+                        android:paddingTop="5dp"/>
+
+                    <Spinner
+                        android:id="@+id/spn_nxb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Thể loại:"
+                    android:layout_marginRight="42dp"/>
+
+                <Spinner
+                    android:id="@+id/spn_theloai"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Vị trí:"
+                    android:layout_marginRight="72dp"/>
+
+                <Spinner
+                    android:id="@+id/spn_vitri"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Ngày xuất bản:"
+                    android:layout_marginRight="10dp"/>
+
+                <EditText
+                    android:id="@+id/txt_ngayxuat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:hint="Ngày xuất bản..."/>
+
+                <ImageView
+                    android:id="@+id/img_date"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/ic_date"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="5dp"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Số trang:"
+                    android:layout_marginRight="62dp"/>
+
+                <EditText
+                    android:id="@+id/txt_sotrang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:hint="Số trang..."
+                    android:layout_marginRight="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="trang"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_book"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Tóm tắt nội dung"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/txt_noidung"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/rectangle_border"
+                android:hint="Nhập nội dung (tối 100 ký tự)..."
+                android:padding="10dp"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:maxLength="100"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

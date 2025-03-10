@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/tim">
+
+        <!-- LinearLayout để bố trí các thành phần trong Toolbar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Nút Quay lại -->
+            <ImageButton
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginRight="35dp"
+                android:layout_gravity="start"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Quay lại"
+                android:src="@android:drawable/ic_menu_revert" />
+
+            <!-- Tiêu đề nằm giữa -->
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Chi tiết đầu sách"
+                android:textColor="@android:color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_marginRight="30dp"/>
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/rectangle_border"
+                android:padding="2dp">
+
+                <ImageView
+                    android:id="@+id/img_book"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/ic_book"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/txt_tensach"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="Tên sách"/>
+
+                    <TextView
+                        android:id="@+id/txt_danhgia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="Đánh giá"/>
+
+                    <TextView
+                        android:id="@+id/txt_tacgia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="Tác giả"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- TextView để mở đánh giá -->
+            <TextView
+                android:id="@+id/txtClickDanhGia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click để đánh giá"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:layout_gravity="center"
+                android:textColor="@color/tim"
+                android:padding="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginTop="10dp"/>
+
+            <!-- chạm để đánh giá // ẩn đi -->
+            <LinearLayout
+                android:id="@+id/layout_danhgia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Đánh giá của bạn với quyển sách này"
+                    android:layout_gravity="center"
+                    android:textStyle="italic"/>
+
+                <RatingBar
+                    android:id="@+id/ratingbar_"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txt_md_danhgia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Text mức độ đánh giá"
+                    android:layout_gravity="center"
+                    android:textStyle="italic"/>
+
+                <EditText
+                    android:id="@+id/txt_nd_danhgia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Viết nội dung đánh giá..."
+                    android:textSize="20sp"
+                    android:padding="15dp"
+                    android:layout_marginTop="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <Button
+                        android:id="@+id/btn_huy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="Hủy"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="50dp"
+                        android:paddingRight="50dp"
+                        android:layout_marginRight="10dp"/>
+
+                    <Button
+                        android:id="@+id/btn_themdanhgia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="Gửi đánh giá"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_book"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Tóm tắt nội dung"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/txt_noidungsach"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/rectangle_border"
+                android:hint="Nhập nội dung (tối 100 ký tự)..."
+                android:padding="10dp"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:maxLength="100"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/txt_vitri"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Vị trí"/>
+
+                <TextView
+                    android:id="@+id/txt_nxb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Nhà xuất bản: Nhà xuất bản ......"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/txt_soluong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Số lượng"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/txt_theloai"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Thể loại"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/txt_ngayxuat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Ngày xuất bản"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/txt_sotrang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Số trang"
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="Đánh giá và bình luận:"
+                android:textStyle="italic"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/tim"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="5dp">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true">
+
+                    <LinearLayout
+                        android:id="@+id/layout_binhluan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+
+                </ScrollView>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

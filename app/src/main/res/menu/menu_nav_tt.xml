@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/nav_ds"
+            android:title="@string/nav_ds"
+            android:icon="@drawable/ic_launcher_foreground"/>
+
+        <item android:id="@+id/nav_tg"
+            android:title="@string/nav_tg"
+            android:icon="@drawable/ic_launcher_foreground"/>
+
+        <item android:id="@+id/nav_nxb"
+            android:title="@string/nav_nxb"
+            android:icon="@drawable/ic_launcher_foreground"/>
+
+        <item android:id="@+id/nav_ls"
+            android:title="@string/nav_ls"
+            android:icon="@drawable/ic_launcher_foreground"/>
+
+        <item android:id="@+id/nav_vt"
+            android:title="@string/nav_vt"
+            android:icon="@drawable/ic_launcher_foreground"/>
+    </group>
+
+    <item android:title="@string/nav_taikhoan">
+        <menu>
+
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/nav_tt"
+                    android:title="@string/nav_tt"
+                    android:icon="@drawable/ic_launcher_foreground"/>
+
+                <item android:id="@+id/nav_tao_tk"
+                    android:title="@string/nav_tao_tk"
+                    android:icon="@drawable/ic_launcher_foreground"/>
+
+                <item android:id="@+id/nav_doimk"
+                    android:title="@string/nav_doimk"
+                    android:icon="@drawable/ic_launcher_foreground"/>
+
+                <item android:id="@+id/nav_dx"
+                    android:title="@string/nav_dx"
+                    android:icon="@drawable/ic_launcher_foreground"/>
+            </group>
+
+        </menu>
+    </item>
+
+</menu>

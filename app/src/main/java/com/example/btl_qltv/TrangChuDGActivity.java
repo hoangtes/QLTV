@@ -29,8 +29,10 @@ import com.google.android.material.navigation.NavigationView;
 public class TrangChuDGActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int FRAGMENT_DS = 0;
-    private static final int FRAGMENT_TK = 1;
-    private static final int FRAGMENT_DMK = 2;
+    private static final int FRAGMENT_LS_MUON = 1;
+    private static final int FRAGMENT_TRASACH = 2;
+    private static final int FRAGMENT_TK = 3;
+    private static final int FRAGMENT_DMK = 4;
 
     private int m_CurrentFragment = FRAGMENT_DS;
 
@@ -59,9 +61,6 @@ public class TrangChuDGActivity extends AppCompatActivity implements NavigationV
             loadThongTinNguoiDung(taikhoan);
         }
 
-        // Gọi replaceFragment nếu cần
-        replaceFragment(new DG_DauSachActivity(), taikhoan);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -73,6 +72,9 @@ public class TrangChuDGActivity extends AppCompatActivity implements NavigationV
 
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Gọi replaceFragment nếu cần
+        replaceFragment(new DG_DauSachActivity(), taikhoan, "Đầu sách");
 
         // Xử lý sự kiện nút back
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
@@ -97,17 +99,27 @@ public class TrangChuDGActivity extends AppCompatActivity implements NavigationV
 
         if (id == R.id.nav_ds) {
             if (m_CurrentFragment != FRAGMENT_DS) {
-                replaceFragment(new DG_DauSachActivity(), taikhoan);
+                replaceFragment(new DG_DauSachActivity(), taikhoan, "Đầu sách");
                 m_CurrentFragment = FRAGMENT_DS;
+            }
+        } else if (id == R.id.nav_ls_muon) {
+            if (m_CurrentFragment != FRAGMENT_LS_MUON) {
+                replaceFragment(new Ls_MuonActivity(), taikhoan, "Lịch sử mượn/trả sách");
+                m_CurrentFragment = FRAGMENT_LS_MUON;
+            }
+        } else if (id == R.id.nav_trasach) {
+            if (m_CurrentFragment != FRAGMENT_TRASACH) {
+                replaceFragment(new TraSachActivity(), taikhoan, "Trả sách");
+                m_CurrentFragment = FRAGMENT_TRASACH;
             }
         } else if (id == R.id.nav_tt) {
             if (m_CurrentFragment != FRAGMENT_TK) {
-                replaceFragment(new TaiKhoanActivity(), taikhoan);
+                replaceFragment(new TaiKhoanActivity(), taikhoan, "Thông tin cá nhân");
                 m_CurrentFragment = FRAGMENT_TK;
             }
         } else if (id == R.id.nav_doimk) {
             if (m_CurrentFragment != FRAGMENT_DMK) {
-                replaceFragment(new DoiMkActivity(), taikhoan);
+                replaceFragment(new DoiMkActivity(), taikhoan, "Đổi mật khẩu");
                 m_CurrentFragment = FRAGMENT_DMK;
             }
         } else if (id == R.id.nav_dx) {
@@ -124,7 +136,7 @@ public class TrangChuDGActivity extends AppCompatActivity implements NavigationV
 
     private void loadThongTinNguoiDung(String taikhoan) {
         if (dbHelper == null) { // Kiểm tra lại dbHelper trước khi dùng
-            Log.e("TrangChuTTActivity", "DatabaseHelper is null");
+            Log.e("TrangChuDGActivity", "DatabaseHelper is null");
             return;
         }
 
@@ -152,13 +164,20 @@ public class TrangChuDGActivity extends AppCompatActivity implements NavigationV
         db.close();
     }
 
-    private void replaceFragment(Fragment fragment, String taikhoan) {
+    private void replaceFragment(Fragment fragment, String taikhoan, String title) {
+        // Truyền tài khoản vào Fragment
         Bundle bundle = new Bundle();
         bundle.putString("taikhoan", taikhoan);
         fragment.setArguments(bundle);
 
+        // Replace Fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame, fragment);
         transaction.commit();
+
+        // Đổi tiêu đề trên Toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
     }
 }

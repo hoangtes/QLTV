@@ -16,6 +16,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import java.util.Calendar;
+import java.util.Date;
+
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -134,7 +141,10 @@ public class ThemDauSachActivity extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                (view, year1, month1, dayOfMonth) -> txtNgayXuat.setText(dayOfMonth + "/" + (month1 + 1) + "/" + year1),
+                (view, year1, month1, dayOfMonth) -> {
+                    String formattedDate = String.format(Locale.getDefault(), "%02d/%02d/%04d", dayOfMonth, month1 + 1, year1);
+                    txtNgayXuat.setText(formattedDate);
+                },
                 year, month, day);
         datePickerDialog.show();
     }
@@ -170,6 +180,20 @@ public class ThemDauSachActivity extends AppCompatActivity {
             return;
         }
 
+        // Kiểm tra định dạng ngày xuất bản
+        if (!isValidDate(ngayXuatBan)) {
+            Toast.makeText(this, "Ngày xuất bản phải đúng định dạng dd/MM/yyyy và không vượt quá ngày hiện tại!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int soTrang;
+        try {
+            soTrang = Integer.parseInt(soTrangStr);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Số trang không hợp lệ!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -184,7 +208,6 @@ public class ThemDauSachActivity extends AppCompatActivity {
         cursor.close();
         db.close();
 
-        int soTrang = Integer.parseInt(soTrangStr);
         db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("anhds", anhDaiDien);
@@ -206,4 +229,36 @@ public class ThemDauSachActivity extends AppCompatActivity {
             Toast.makeText(this, "Lỗi khi thêm sách!", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private boolean isValidDate(String dateStr) {
+        // Kiểm tra định dạng phải là dd/MM/yyyy với 4 chữ số năm
+        if (!dateStr.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
+            return false;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        sdf.setLenient(false); // Không cho phép ngày không hợp lệ
+
+        try {
+            Date date = sdf.parse(dateStr);
+            Calendar inputCal = Calendar.getInstance();
+            inputCal.setTime(date);
+
+            int year = inputCal.get(Calendar.YEAR);
+            int month = inputCal.get(Calendar.MONTH);
+            int day = inputCal.get(Calendar.DAY_OF_MONTH);
+
+            Calendar today = Calendar.getInstance();
+
+            // Kiểm tra năm >= 1000
+            if (year < 1000) return false;
+
+            // Không cho phép vượt quá ngày hiện tại
+            return !inputCal.after(today);
+
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
 }

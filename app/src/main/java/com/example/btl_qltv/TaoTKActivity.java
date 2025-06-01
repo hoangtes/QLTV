@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -25,6 +26,8 @@ public class TaoTKActivity extends Fragment {
 
     private DatabaseHelper dbHelper;
     private LinearLayout layoutTaoTk;
+    private EditText txt_timkiem;
+    private ImageButton ic_timkiem, ic_tailai, ic_boloc;
     private String taikhoan;
 
     @Nullable
@@ -34,11 +37,61 @@ public class TaoTKActivity extends Fragment {
 
         dbHelper = new DatabaseHelper(getActivity());
         layoutTaoTk = view.findViewById(R.id.layout_tao_tk); // Ánh xạ layout chứa danh sách tài khoản
+        txt_timkiem = view.findViewById(R.id.txt_timkiem);
+        ic_timkiem = view.findViewById(R.id.ic_timkiem);
+        ic_tailai = view.findViewById(R.id.ic_tailai);
+        ic_boloc = view.findViewById(R.id.ic_boloc);
 
         taikhoan = requireActivity().getIntent().getStringExtra("taikhoan");
 
         // Gọi hàm load danh sách tài khoản
         loadTaiKhoan();
+
+        ic_timkiem.setOnClickListener(v -> {
+            String tuKhoa = txt_timkiem.getText().toString().trim();
+            if (tuKhoa.isEmpty()) {
+                Toast.makeText(getContext(), "Vui lòng nhập họ tên hoặc tài khoản để tìm!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            layoutTaoTk.removeAllViews();
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+            Cursor cursor = db.rawQuery(
+                    "SELECT hoten, taikhoan, chucvu FROM user WHERE hoten LIKE ? OR taikhoan LIKE ?",
+                    new String[]{"%" + tuKhoa + "%", "%" + tuKhoa + "%"}
+            );
+
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    hienThiTaiKhoan(cursor);
+                } while (cursor.moveToNext());
+                cursor.close();
+            } else {
+                Toast.makeText(getContext(), "Không tìm thấy thông tin!", Toast.LENGTH_SHORT).show();
+            }
+
+            db.close();
+        });
+
+        ic_tailai.setOnClickListener(v -> {
+            txt_timkiem.setText("");
+            loadTaiKhoan(); // Gọi lại hàm load mặc định
+        });
+
+        ic_boloc.setOnClickListener(v -> {
+            String[] chucVuOptions = {"Thủ thư", "Độc giả"};
+
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Lọc theo chức vụ")
+                    .setItems(chucVuOptions, (dialog, which) -> {
+                        String chucvuChon = chucVuOptions[which];
+                        locTheoChucVu(chucvuChon);
+                    })
+                    .setNegativeButton("Hủy", null)
+                    .show();
+        });
+
 
         // Ánh xạ BottomNavigationView
         BottomNavigationView bottomNav = view.findViewById(R.id.bottom_nav);
@@ -96,6 +149,49 @@ public class TaoTKActivity extends Fragment {
         cursor.close();
         db.close();
     }
+
+    private void locTheoChucVu(String chucvu) {
+        layoutTaoTk.removeAllViews();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT hoten, taikhoan, chucvu FROM user WHERE chucvu = ?",
+                new String[]{chucvu}
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                hienThiTaiKhoan(cursor);
+            } while (cursor.moveToNext());
+            cursor.close();
+        } else {
+            Toast.makeText(getContext(), "Không có tài khoản với chức vụ này!", Toast.LENGTH_SHORT).show();
+        }
+
+        db.close();
+    }
+
+    private void hienThiTaiKhoan(Cursor cursor) {
+        String hoten = cursor.getString(0);
+        String taikhoan = cursor.getString(1);
+        String chucvu = cursor.getString(2);
+
+        View itemView = getLayoutInflater().inflate(R.layout.item_taotk, layoutTaoTk, false);
+
+        TextView txtTenNguoiDung = itemView.findViewById(R.id.txt_tennguoidung);
+        TextView txtTaiKhoan = itemView.findViewById(R.id.txt_taikhoan);
+        TextView txtChucVu = itemView.findViewById(R.id.txt_chucvu);
+        ImageButton imgMore = itemView.findViewById(R.id.img_more);
+
+        txtTenNguoiDung.setText(hoten);
+        txtTaiKhoan.setText(taikhoan);
+        txtChucVu.setText(chucvu);
+
+        imgMore.setOnClickListener(v -> showPopupMenu(v, taikhoan));
+
+        layoutTaoTk.addView(itemView);
+    }
+
 
     // Hàm hiển thị popup menu khi nhấn vào img_more
     private void showPopupMenu(View view, String taikhoan) {

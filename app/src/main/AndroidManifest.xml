@@ -43,6 +43,11 @@
         <activity android:name=".TT_DauSachActivity" />
         <activity android:name=".TT_TinhTrangActivity" />
         <activity android:name=".ViTriActivity" />
+        <activity android:name=".TT_Yc_MuonActivity" />
+        <activity android:name=".Ls_MuonActivity" />
+        <activity android:name=".TraSachActivity" />
+        <activity android:name=".TT_Xn_TraSachActivity" />
+        <activity android:name=".ThongKeActivity" />
 
     </application>
 

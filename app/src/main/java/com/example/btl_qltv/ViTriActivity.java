@@ -49,7 +49,12 @@ public class ViTriActivity extends Fragment {
         btnThem.setOnClickListener(v -> themvt());
         btnSua.setOnClickListener(v -> suavt());
         btnXoa.setOnClickListener(v -> xoavt());
-        btnTaiLai.setOnClickListener(v -> hienThiDanhSachvt(""));
+
+        btnTaiLai.setOnClickListener(v -> {
+            txttenvt.setText("");
+            hienThiDanhSachvt("");
+        });
+
         btnTimKiem.setOnClickListener(v -> timKiemvt());
 
         return view;
@@ -197,8 +202,8 @@ public class ViTriActivity extends Fragment {
             return false;
         }
 
-        if (!ten.matches("^[a-zA-Z0-9\\s]+$")) {
-            Toast.makeText(getContext(), "Tên vị trí không được chứa ký tự đặc biệt!", Toast.LENGTH_SHORT).show();
+        if (!ten.matches("^[\\p{L}0-9\\s,\\-]+$")) {
+            Toast.makeText(getContext(), "Tên tác giả không được chứa ký tự đặc biệt!", Toast.LENGTH_SHORT).show();
             return false;
         }
 

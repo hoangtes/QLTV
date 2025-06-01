@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "LibraryDB.db";
-    private static final int DATABASE_VERSION = 3; // Cập nhật version để chạy onUpgrade()
+    private static final int DATABASE_VERSION = 6; // Cập nhật version để chạy onUpgrade()
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -90,6 +90,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "soluongsach INTEGER NOT NULL, " +
                 "FOREIGN KEY(tends) REFERENCES dausach(tends))";
         db.execSQL(createTinhTrangSachTable);
+
+        String createMuonTraTable = "CREATE TABLE muontra (" +
+                "idmt INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "taikhoan TEXT NOT NULL, " +
+                "idtt INTEGER NOT NULL, " +
+                "tensach TEXT NOT NULL, " +
+                "ngaymuon TEXT NOT NULL, " +
+                "ngaytra TEXT, " +
+                "trangthai TEXT, " +
+                "FOREIGN KEY (taikhoan) REFERENCES user(taikhoan), " +
+                "FOREIGN KEY (idtt) REFERENCES tinhtrangsach(idtt))";
+        db.execSQL(createMuonTraTable);
+
+        String createYeuCauMuonTable = "CREATE TABLE yeucau_muon (" +
+                "idyc INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "taikhoan TEXT NOT NULL, " +
+                "hoten TEXT NOT NULL, " +
+                "idtt INTEGER NOT NULL, " +
+                "tensach TEXT NOT NULL, " +
+                "ngayyeucau TEXT NOT NULL, " +
+                "trangthai TEXT, " +
+                "FOREIGN KEY (taikhoan) REFERENCES user(taikhoan), " +
+                "FOREIGN KEY (idtt) REFERENCES tinhtrangsach(idtt))";
+        db.execSQL(createYeuCauMuonTable);
+
     }
 
     @Override
@@ -102,6 +127,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS vitri");
         db.execSQL("DROP TABLE IF EXISTS danhgia");
         db.execSQL("DROP TABLE IF EXISTS tinhtrangsach");
+        db.execSQL("DROP TABLE IF EXISTS muontra");
+        db.execSQL("DROP TABLE IF EXISTS yeucau_muon");
         onCreate(db);
     }
 }

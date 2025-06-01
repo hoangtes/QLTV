@@ -5,9 +5,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/layout_timkiem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:background="@drawable/border_vienvuong">
+
+        <EditText
+            android:id="@+id/txt_timkiem"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:hint="Tìm kiếm..."/>
+
+        <ImageButton
+            android:id="@+id/ic_timkiem"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_tim_kiem"
+            android:contentDescription="Tìm kiếm"/>
+
+        <ImageButton
+            android:id="@+id/ic_tailai"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_tai_lai"
+            android:contentDescription="Tải lại"/>
+
+        <ImageButton
+            android:id="@+id/ic_boloc"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_bo_loc"
+            android:contentDescription="Bộ lọc"/>
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/layout_timkiem"
         android:fillViewport="true">
 
         <LinearLayout

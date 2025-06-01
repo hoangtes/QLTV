@@ -11,13 +11,20 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp">
+
+            <TextView
+                android:id="@+id/txt_id_ls_muon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="ID lịch sử mượn"/>
 
             <TextView
                 android:id="@+id/txt_tensach"
@@ -35,42 +42,32 @@
 
             <TextView
                 android:id="@+id/txt_trangthai"
-                android:layout_width="230dp"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Không được phép mượn"/>
-
-            <Button
-                android:id="@+id/btn_yc_muon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Yêu cầu mượn"
-                android:textSize="22sp"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="right"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp">
-
-
-            <TextView
-                android:id="@+id/txt_tinhtrang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="Tốt"
-                android:layout_marginTop="55dp"/>
+                android:text="Trạng thái"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btn_trasach"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trả sách"
+                    android:textSize="22sp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

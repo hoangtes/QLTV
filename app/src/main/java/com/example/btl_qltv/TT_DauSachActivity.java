@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,9 +28,16 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class TT_DauSachActivity extends Fragment {
     private DatabaseHelper dbHelper;
     private LinearLayout layoutDauSach;
+    private List<DauSach> danhSachGoc = new ArrayList<>();
+    private EditText txt_timkiem;
+    private ImageButton ic_timkiem, ic_tailai, ic_boloc;
     private String taikhoan;
 
     @Nullable
@@ -37,6 +45,11 @@ public class TT_DauSachActivity extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tt_dausach, container, false);
         layoutDauSach = view.findViewById(R.id.layout_dausach);
+        txt_timkiem = view.findViewById(R.id.txt_timkiem);
+        ic_timkiem = view.findViewById(R.id.ic_timkiem);
+        ic_tailai = view.findViewById(R.id.ic_tailai);
+        ic_boloc = view.findViewById(R.id.ic_boloc);
+
         dbHelper = new DatabaseHelper(getContext());
 
         taikhoan = requireActivity().getIntent().getStringExtra("taikhoan");
@@ -46,6 +59,42 @@ public class TT_DauSachActivity extends Fragment {
         if (checkPermission()) {
             loadDauSach();
         }
+
+        ic_timkiem.setOnClickListener(v -> {
+            String keyword = txt_timkiem.getText().toString().trim().toLowerCase();
+            List<DauSach> ketQua = new ArrayList<>();
+            for (DauSach ds : danhSachGoc) {
+                if (ds.tenSach.toLowerCase().contains(keyword)
+                        || ds.tacGia.toLowerCase().contains(keyword)
+                        || ds.theLoai.toLowerCase().contains(keyword)) {
+                    ketQua.add(ds);
+                }
+            }
+            renderDauSach(ketQua);
+        });
+
+        ic_tailai.setOnClickListener(v -> {
+            txt_timkiem.setText("");
+            loadDauSach(); // Tải lại từ database
+        });
+
+        ic_boloc.setOnClickListener(v -> {
+            String[] options = {"Sắp xếp theo đánh giá (cao → thấp)", "Sắp xếp theo số lượng (cao → thấp)"};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Bộ lọc")
+                    .setItems(options, (dialog, which) -> {
+                        if (which == 0) {
+                            Collections.sort(danhSachGoc, (a, b) -> Double.compare(
+                                    b.danhGia == null ? 0 : b.danhGia,
+                                    a.danhGia == null ? 0 : a.danhGia));
+                        } else {
+                            Collections.sort(danhSachGoc, (a, b) -> Integer.compare(b.soLuong, a.soLuong));
+                        }
+                        renderDauSach(danhSachGoc);
+                    }).show();
+        });
+
 
         // Ánh xạ BottomNavigationView
         BottomNavigationView bottomNav = view.findViewById(R.id.bottom_nav);
@@ -70,7 +119,17 @@ public class TT_DauSachActivity extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (checkPermission()) {
+            loadDauSach();
+        }
+    }
+
     private void loadDauSach() {
+        danhSachGoc.clear();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(
                 "SELECT ds.anhds, ds.tends, " +
@@ -81,16 +140,26 @@ public class TT_DauSachActivity extends Fragment {
                 null
         );
 
-        layoutDauSach.removeAllViews(); // Xóa dữ liệu cũ
-
         while (cursor.moveToNext()) {
             String anhds = cursor.getString(0);
             String tends = cursor.getString(1);
             Double sosaodg = cursor.isNull(2) ? null : cursor.getDouble(2);
             String tentg = cursor.getString(3);
             String tentl = cursor.getString(4);
-            int soluongsach = cursor.getInt(5);
+            int soluong = cursor.getInt(5);
+            danhSachGoc.add(new DauSach(anhds, tends, sosaodg, tentg, tentl, soluong));
+        }
 
+        cursor.close();
+        db.close();
+
+        renderDauSach(danhSachGoc); // Hiển thị lên giao diện
+    }
+
+
+    private void renderDauSach(List<DauSach> list) {
+        layoutDauSach.removeAllViews();
+        for (DauSach ds : list) {
             View itemView = getLayoutInflater().inflate(R.layout.item_dausach, layoutDauSach, false);
 
             ImageView imgBook = itemView.findViewById(R.id.img_book);
@@ -101,17 +170,15 @@ public class TT_DauSachActivity extends Fragment {
             TextView txtSoSach = itemView.findViewById(R.id.txt_sosach);
             ImageButton imgMore = itemView.findViewById(R.id.img_more);
 
-            // Gán dữ liệu sách
-            txtTenSach.setText(tends);
-            txtDanhGia.setText(sosaodg == null ? "Chưa có đánh giá" : String.format("%.1f / 5,0 sao", sosaodg));
-            txtTacGia.setText(tentg);
-            txtTheLoai.setText(tentl);
-            txtSoSach.setText(soluongsach + " quyển");
+            txtTenSach.setText(ds.tenSach);
+            txtDanhGia.setText(ds.danhGia == null ? "Chưa có đánh giá" : String.format("%.1f / 5,0 sao", ds.danhGia));
+            txtTacGia.setText(ds.tacGia);
+            txtTheLoai.setText(ds.theLoai);
+            txtSoSach.setText(ds.soLuong + " quyển");
 
-            // Kiểm tra ảnh sách
-            if (anhds != null && !anhds.isEmpty()) {
+            if (ds.anh != null && !ds.anh.isEmpty()) {
                 try {
-                    imgBook.setImageURI(Uri.parse(anhds));
+                    imgBook.setImageURI(Uri.parse(ds.anh));
                 } catch (Exception e) {
                     imgBook.setImageResource(R.drawable.ic_book);
                 }
@@ -119,23 +186,21 @@ public class TT_DauSachActivity extends Fragment {
                 imgBook.setImageResource(R.drawable.ic_book);
             }
 
-            // Xử lý sự kiện khi nhấn vào img_more
-            imgMore.setOnClickListener(v -> showPopupMenu(v, tends));
-
-            // Sự kiện khi nhấn vào sách
+            // Click xem chi tiết
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(getActivity(), ChiTietSachActivity.class);
-                intent.putExtra("tends", tends);
+                intent.putExtra("tends", ds.tenSach);
                 intent.putExtra("taikhoan", taikhoan);
                 startActivity(intent);
             });
 
+            // Menu thêm nếu có
+            imgMore.setOnClickListener(v -> showPopupMenu(v, ds.tenSach));
+
             layoutDauSach.addView(itemView);
         }
-
-        cursor.close();
-        db.close();
     }
+
 
     /**
      * Hiển thị menu khi nhấn vào img_more
@@ -157,6 +222,7 @@ public class TT_DauSachActivity extends Fragment {
                 // Chuyển đến TinhTrangActivity
                 Intent intent = new Intent(getActivity(), TT_TinhTrangActivity.class);
                 intent.putExtra("tends", tenSach);
+                intent.putExtra("taikhoan", taikhoan);
                 startActivity(intent);
                 return true;
             } else if (itemId == R.id.menu_xoa) {

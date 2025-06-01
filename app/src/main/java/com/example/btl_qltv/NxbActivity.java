@@ -49,7 +49,12 @@ public class NxbActivity extends Fragment {
         btnThem.setOnClickListener(v -> themNxb());
         btnSua.setOnClickListener(v -> suaNxb());
         btnXoa.setOnClickListener(v -> xoaNxb());
-        btnTaiLai.setOnClickListener(v -> hienThiDanhSachNxb(""));
+
+        btnTaiLai.setOnClickListener(v -> {
+            txtTenNxb.setText("");
+            hienThiDanhSachNxb("");
+        });
+
         btnTimKiem.setOnClickListener(v -> timKiemNxb());
 
         return view;
@@ -197,8 +202,8 @@ public class NxbActivity extends Fragment {
             return false;
         }
 
-        if (!ten.matches("^[a-zA-Z0-9\\s]+$")) {
-            Toast.makeText(getContext(), "Tên nhà xuất bản không được chứa ký tự đặc biệt!", Toast.LENGTH_SHORT).show();
+        if (!ten.matches("^[\\p{L}0-9\\s]+$")) {
+            Toast.makeText(getContext(), "Tên tác giả không được chứa ký tự đặc biệt!", Toast.LENGTH_SHORT).show();
             return false;
         }
 

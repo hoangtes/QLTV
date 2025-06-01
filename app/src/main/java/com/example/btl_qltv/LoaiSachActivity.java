@@ -49,7 +49,12 @@ public class LoaiSachActivity extends Fragment {
         btnThem.setOnClickListener(v -> themtl());
         btnSua.setOnClickListener(v -> suatl());
         btnXoa.setOnClickListener(v -> xoatl());
-        btnTaiLai.setOnClickListener(v -> hienThiDanhSachtl(""));
+
+        btnTaiLai.setOnClickListener(v -> {
+            txttentl.setText("");
+            hienThiDanhSachtl("");
+        });
+
         btnTimKiem.setOnClickListener(v -> timKiemtl());
 
         return view;
@@ -197,8 +202,8 @@ public class LoaiSachActivity extends Fragment {
             return false;
         }
 
-        if (!ten.matches("^[a-zA-Z0-9\\s]+$")) {
-            Toast.makeText(getContext(), "Tên loại sách không được chứa ký tự đặc biệt!", Toast.LENGTH_SHORT).show();
+        if (!ten.matches("^[\\p{L}0-9\\s]+$")) {
+            Toast.makeText(getContext(), "Tên tác giả không được chứa ký tự đặc biệt!", Toast.LENGTH_SHORT).show();
             return false;
         }
 

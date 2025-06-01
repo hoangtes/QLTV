@@ -2,6 +2,7 @@ package com.example.btl_qltv;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
@@ -29,13 +31,18 @@ import com.google.android.material.navigation.NavigationView;
 public class TrangChuTTActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int FRAGMENT_DS = 0;
-    private static final int FRAGMENT_TK = 1;
-    private static final int FRAGMENT_TG = 2;
-    private static final int FRAGMENT_NXB = 3;
-    private static final int FRAGMENT_LS = 4;
-    private static final int FRAGMENT_VT = 5;
-    private static final int FRAGMENT_DMK = 6;
-    private static final int FRAGMENT_TAO_TK = 7;
+    private static final int FRAGMENT_YC_MUON = 1;
+    private static final int FRAGMENT_XN_TRA = 2;
+    private static final int FRAGMENT_TK = 3;
+    private static final int FRAGMENT_TG = 4;
+    private static final int FRAGMENT_NXB = 5;
+    private static final int FRAGMENT_LS = 6;
+    private static final int FRAGMENT_VT = 7;
+    private static final int FRAGMENT_DMK = 8;
+    private static final int FRAGMENT_TAO_TK = 9;
+    private static final int FRAGMENT_LS_MUON = 10;
+    private static final int FRAGMENT_TRASACH = 11;
+    private static final int FRAGMENT_THONGKE = 12;
 
     private int m_CurrentFragment = FRAGMENT_DS;
 
@@ -64,10 +71,6 @@ public class TrangChuTTActivity extends AppCompatActivity implements NavigationV
             loadThongTinNguoiDung(taikhoan);
         }
 
-        // Gọi replaceFragment nếu cần
-        replaceFragment(new TT_DauSachActivity(), taikhoan);
-
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -80,6 +83,9 @@ public class TrangChuTTActivity extends AppCompatActivity implements NavigationV
 
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Gọi replaceFragment nếu cần
+        replaceFragment(new TT_DauSachActivity(), taikhoan, "Đầu sách");
 
         // Xử lý sự kiện nút back
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
@@ -104,43 +110,68 @@ public class TrangChuTTActivity extends AppCompatActivity implements NavigationV
 
         if (id == R.id.nav_ds) {
             if (m_CurrentFragment != FRAGMENT_DS) {
-                replaceFragment(new TT_DauSachActivity(), taikhoan);
+                replaceFragment(new TT_DauSachActivity(), taikhoan, "Đầu sách");
                 m_CurrentFragment = FRAGMENT_DS;
             }
         } else if (id == R.id.nav_tt) {
             if (m_CurrentFragment != FRAGMENT_TK) {
-                replaceFragment(new TaiKhoanActivity(), taikhoan);
+                replaceFragment(new TaiKhoanActivity(), taikhoan, "Thông tin cá nhân");
                 m_CurrentFragment = FRAGMENT_TK;
             }
         } else if (id == R.id.nav_tg) {
             if (m_CurrentFragment != FRAGMENT_TG) {
-                replaceFragment(new TacGiaActivity(), taikhoan);
+                replaceFragment(new TacGiaActivity(), taikhoan, "Tác giả");
                 m_CurrentFragment = FRAGMENT_TG;
             }
         } else if (id == R.id.nav_nxb) {
             if (m_CurrentFragment != FRAGMENT_NXB) {
-                replaceFragment(new NxbActivity(), taikhoan);
+                replaceFragment(new NxbActivity(), taikhoan, "Nhà xuất bản");
                 m_CurrentFragment = FRAGMENT_NXB;
             }
         } else if (id == R.id.nav_ls) {
             if (m_CurrentFragment != FRAGMENT_LS) {
-                replaceFragment(new LoaiSachActivity(), taikhoan);
+                replaceFragment(new LoaiSachActivity(), taikhoan, "Loại sách");
                 m_CurrentFragment = FRAGMENT_LS;
             }
         } else if (id == R.id.nav_vt) {
             if (m_CurrentFragment != FRAGMENT_VT) {
-                replaceFragment(new ViTriActivity(), taikhoan);
+                replaceFragment(new ViTriActivity(), taikhoan, "Vị trí sách");
                 m_CurrentFragment = FRAGMENT_VT;
             }
         } else if (id == R.id.nav_doimk) {
             if (m_CurrentFragment != FRAGMENT_DMK) {
-                replaceFragment(new DoiMkActivity(), taikhoan);
+                replaceFragment(new DoiMkActivity(), taikhoan, "Đổi mật khẩu");
                 m_CurrentFragment = FRAGMENT_DMK;
             }
         } else if (id == R.id.nav_tao_tk) {
             if (m_CurrentFragment != FRAGMENT_TAO_TK) {
-                replaceFragment(new TaoTKActivity(), taikhoan);
+                replaceFragment(new TaoTKActivity(), taikhoan, "Tạo tài khoản");
                 m_CurrentFragment = FRAGMENT_TAO_TK;
+            }
+        } else if (id == R.id.nav_yc_muon) {
+            if (m_CurrentFragment != FRAGMENT_YC_MUON) {
+                replaceFragment(new TT_Yc_MuonActivity(), taikhoan, "Yêu cầu mượn sách");
+                m_CurrentFragment = FRAGMENT_YC_MUON;
+            }
+        } else if (id == R.id.nav_xacnhan_tra) {
+            if (m_CurrentFragment != FRAGMENT_XN_TRA) {
+                replaceFragment(new TT_Xn_TraSachActivity(), taikhoan, "Xác nhận trả sách");
+                m_CurrentFragment = FRAGMENT_XN_TRA;
+            }
+        } else if (id == R.id.nav_ls_muon) {
+            if (m_CurrentFragment != FRAGMENT_LS_MUON) {
+                replaceFragment(new Ls_MuonActivity(), taikhoan, "Lịch sử mượn/trả sách");
+                m_CurrentFragment = FRAGMENT_LS_MUON;
+            }
+        } else if (id == R.id.nav_trasach) {
+            if (m_CurrentFragment != FRAGMENT_TRASACH) {
+                replaceFragment(new TraSachActivity(), taikhoan, "Trả sách");
+                m_CurrentFragment = FRAGMENT_TRASACH;
+            }
+        } else if (id == R.id.nav_thongke) {
+            if (m_CurrentFragment != FRAGMENT_THONGKE) {
+                replaceFragment(new ThongKeActivity(), taikhoan, "Thống kê");
+                m_CurrentFragment = FRAGMENT_THONGKE;
             }
         } else if (id == R.id.nav_dx) {
             // Xử lý đăng xuất
@@ -153,7 +184,6 @@ public class TrangChuTTActivity extends AppCompatActivity implements NavigationV
         m_DrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
     private void loadThongTinNguoiDung(String taikhoan) {
         if (dbHelper == null) { // Kiểm tra lại dbHelper trước khi dùng
@@ -186,14 +216,21 @@ public class TrangChuTTActivity extends AppCompatActivity implements NavigationV
     }
 
 
-    private void replaceFragment(Fragment fragment, String taikhoan) {
+    private void replaceFragment(Fragment fragment, String taikhoan, String title) {
+        // Truyền tài khoản vào Fragment
         Bundle bundle = new Bundle();
         bundle.putString("taikhoan", taikhoan);
         fragment.setArguments(bundle);
 
+        // Replace Fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame, fragment);
         transaction.commit();
+
+        // Đổi tiêu đề trên Toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
     }
 
 }

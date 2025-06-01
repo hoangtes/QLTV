@@ -49,7 +49,12 @@ public class TacGiaActivity extends Fragment {
         btnThem.setOnClickListener(v -> themTacGia());
         btnSua.setOnClickListener(v -> suaTacGia());
         btnXoa.setOnClickListener(v -> xoaTacGia());
-        btnTaiLai.setOnClickListener(v -> hienThiDanhSachTacGia(""));
+
+        btnTaiLai.setOnClickListener(v -> {
+            txtTenTacGia.setText("");
+            hienThiDanhSachTacGia("");
+        });
+
         btnTimKiem.setOnClickListener(v -> timKiemTacGia());
 
         return view;
@@ -197,10 +202,11 @@ public class TacGiaActivity extends Fragment {
             return false;
         }
 
-        if (!ten.matches("^[a-zA-Z0-9\\s]+$")) {
+        if (!ten.matches("^[\\p{L}0-9\\s]+$")) {
             Toast.makeText(getContext(), "Tên tác giả không được chứa ký tự đặc biệt!", Toast.LENGTH_SHORT).show();
             return false;
         }
+
 
         return true;
     }

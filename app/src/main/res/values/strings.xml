@@ -7,6 +7,11 @@
     <string name="nav_nxb">Nhà xuất bản</string>
     <string name="nav_ls">Loại sách</string>
     <string name="nav_vt">Vị trí</string>
+    <string name="nav_ls_muontra">Lịch sử mượn/trả sách</string>
+    <string name="nav_tra_sach">Trả sách</string>
+    <string name="nav_xn_tra_sach">Yêu cầu trả sách</string>
+    <string name="nav_yc_muon">Yêu cầu mượn sách</string>
+    <string name="nav_thong_ke">Thống kê</string>
 
     <string name="nav_tao_tk">Tạo tài khoản</string>
 

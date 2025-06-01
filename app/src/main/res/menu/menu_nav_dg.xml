@@ -7,6 +7,14 @@
             android:title="@string/nav_ds"
             android:icon="@drawable/ic_launcher_foreground"/>
 
+        <item android:id="@+id/nav_ls_muon"
+            android:title="@string/nav_ls_muontra"
+            android:icon="@drawable/ic_launcher_foreground"/>
+
+        <item android:id="@+id/nav_trasach"
+            android:title="@string/nav_tra_sach"
+            android:icon="@drawable/ic_launcher_foreground"/>
+
     </group>
 
 
